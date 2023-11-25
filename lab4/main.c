@@ -10,13 +10,13 @@ double find_max(int* arr, int numthreads) {
     int mx = -1;
 #pragma omp parallel num_threads(numthreads) shared(arr) reduction(max:mx)
     {
-#pragma omp for schedule ( static )
-//#pragma omp for schedule ( static,1)
+//#pragma omp for schedule ( static )
+#pragma omp for schedule ( static,5)
 //#pragma omp for schedule ( static, 5)
 //#pragma omp for schedule ( dynamic )
-//#pragma omp for schedule ( dynamic ,2)
+//#pragma omp for schedule ( dynamic ,5)
 //#pragma omp for schedule ( guided)
-//#pragma omp for schedule ( guided,2)
+//#pragma omp for schedule ( guided,5)
 //#pragma omp for schedule ( auto)
     for (int i = 0; i < SIZE; ++i) {
         if (arr[i] > mx) {
@@ -48,7 +48,7 @@ int main() {
             avgTime += find_max(arr, numthreads);
         }
         avgTime /= 10;
-        fprintf(fp, "%d : %f\n", numthreads, avgTime);
+        fprintf(fp, "%f\n", avgTime);
     }
     fclose(fp);
     free(arr);
